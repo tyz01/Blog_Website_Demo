@@ -22,12 +22,12 @@ public class PageController {
     }
 
     @GetMapping("/page")
-    public String page( Model model) {
+    public String page() {
         return "page";
     }
 
     @GetMapping("/page/blogAdd")
-    public String pageAdd( Model model) {
+    public String pageAdd() {
         return "blogAdd";
     }
 
@@ -62,8 +62,8 @@ public class PageController {
         return "blogEdit";
     }
 
-    @PostMapping("/page/blogAdd/{id}/edit")
-    public String blogPostUpdate(@PathVariable( value = "id") Integer id, @RequestParam String title,
+    @PostMapping("/page/blogAdd/{id}/edit") //value = id = 1
+    public String blogPostUpdate(@PathVariable("id") Integer id, @RequestParam String title,
                                  @RequestParam String email, @RequestParam String fullText){
         Post post = postRepository.findById(id).orElseThrow();
         post.setTitle(title);
