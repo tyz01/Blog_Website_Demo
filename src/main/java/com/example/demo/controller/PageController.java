@@ -74,7 +74,7 @@ public class PageController {
     }
 
     @PostMapping("/page/blogAdd/{id}/remove")
-    public String blogPostDelete(@PathVariable("id") Integer id){
+    public String blogPostDelete(@PathVariable(value = "id") Integer id){
         Post post = postRepository.findById(id).orElseThrow();
         postRepository.delete(post);
         return "redirect:/AllArticles";
