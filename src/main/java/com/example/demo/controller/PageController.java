@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import com.example.demo.exeption.NotFoundException;
 import com.example.demo.models.Post;
 import com.example.demo.repository.PostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,7 +61,7 @@ public class PageController {
         return "blogEdit";
     }
 
-    @PostMapping("/page/blogAdd/{id}/edit") 
+    @PostMapping("/page/blogAdd/{id}/edit")
     public String blogPostUpdate(@PathVariable(value = "id") Integer id, @RequestParam String title,
                                  @RequestParam String email, @RequestParam String fullText){
         Post post = postRepository.findById(id).orElseThrow();
@@ -73,7 +74,7 @@ public class PageController {
 
     @DeleteMapping("/page/blogAdd/{id}/remove")
     public String blogPostDelete(@PathVariable(value = "id") Integer id){
-        Post post = postRepository.findById(id).orElseThrow();
+        Post post = postRepository.findById(id).orElseThrow(NotFoundException::new);
         postRepository.delete(post);
         return "redirect:/AllArticles";
     }
