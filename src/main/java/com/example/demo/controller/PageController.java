@@ -5,10 +5,8 @@ import com.example.demo.repository.PostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
+
 import java.util.ArrayList;
 import java.util.Optional;
 
@@ -62,8 +60,8 @@ public class PageController {
         return "blogEdit";
     }
 
-    @PostMapping("/page/blogAdd/{id}/edit") //value = id = 1
-    public String blogPostUpdate(@PathVariable("id") Integer id, @RequestParam String title,
+    @PostMapping("/page/blogAdd/{id}/edit") 
+    public String blogPostUpdate(@PathVariable(value = "id") Integer id, @RequestParam String title,
                                  @RequestParam String email, @RequestParam String fullText){
         Post post = postRepository.findById(id).orElseThrow();
         post.setTitle(title);
@@ -73,7 +71,7 @@ public class PageController {
         return "redirect:/AllArticles";
     }
 
-    @PostMapping("/page/blogAdd/{id}/remove")
+    @DeleteMapping("/page/blogAdd/{id}/remove")
     public String blogPostDelete(@PathVariable(value = "id") Integer id){
         Post post = postRepository.findById(id).orElseThrow();
         postRepository.delete(post);
