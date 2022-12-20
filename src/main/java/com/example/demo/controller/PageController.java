@@ -27,7 +27,7 @@ public class PageController {
     }
 
     @GetMapping("/page/blogAdd")
-    public String pageAdd() {
+    public String pageAdd(Model model) {
         return "blogAdd";
     }
 
