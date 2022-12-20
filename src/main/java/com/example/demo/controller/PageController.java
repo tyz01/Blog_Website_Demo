@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.Map;
 import java.util.Optional;
 
 @Controller
@@ -64,7 +65,7 @@ public class PageController {
     @PostMapping("/page/blogAdd/{id}/edit")
     public String blogPostUpdate(@PathVariable(value = "id") Integer id, @RequestParam String title,
                                  @RequestParam String email, @RequestParam String fullText){
-        Post post = postRepository.findById(id).orElseThrow();
+        Post post = postRepository.findById(id).orElseThrow(NotFoundException::new);
         post.setTitle(title);
         post.setEmail(email);
         post.setFullText(fullText);
@@ -72,10 +73,14 @@ public class PageController {
         return "redirect:/AllArticles";
     }
 
-    @DeleteMapping("/page/blogAdd/{id}/remove")
+    @PostMapping("/page/blogAdd/{id}/remove")
     public String blogPostDelete(@PathVariable(value = "id") Integer id){
         Post post = postRepository.findById(id).orElseThrow(NotFoundException::new);
         postRepository.delete(post);
         return "redirect:/AllArticles";
+    }
+    @GetMapping("/index")
+    public String pageMessage() {
+        return "index";
     }
 }
